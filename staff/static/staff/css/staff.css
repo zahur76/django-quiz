@@ -1,3 +1,27 @@
-.content {
-    background: rgb(70, 4, 194);
+.bg-secondary {
+    background: lightgray !important;
+}
+
+.custom-select {
+    height: 38px;
+}
+
+/* Media Screen */
+@media screen and (max-width: 768px){
+    .staff-text{        
+        font-size: 14px;
+    } 
+}
+
+@media screen and (max-width: 560px){    
+    .staff-text{        
+        font-size: 12px;
+    }
+    .custom-select, .search-button {
+        height: 30px;
+    }
+    .search-button {
+        line-height: 14px;
+    }
+
 }
