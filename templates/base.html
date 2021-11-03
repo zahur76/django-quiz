@@ -18,15 +18,16 @@
         <title>Django-Quiz</title>
     </head>
     <body>        
-        <nav class="row m-0 bg-dark">
+        <nav class="row m-0 bg-danger">
             <div class="d-none d-md-block col-md-2"></div>            
-            <div class="col-9 col-md-8 h1 text-center">
-                <a class="text-info" href="{% url 'home' %}">Quiz</a>
+            <div class="col-8 col-md-8 h1 text-center">
+                <a class="text-dark" href="{% url 'home' %}">Quiz</a>
             </div> 
-            {% if request.user.is_authenticated %}
-                <a href="{% url 'logout' %}" class="p-0 col-2 col-md-2 text-center my-auto text-light logout-button nav-text">Logout</a>
+            {% if request.user.is_authenticated %}                
+                <a href="{% url 'staff' %}" class="p-0 col-2 col-md-1 text-center my-auto text-dark logout-button nav-text">Admin</a>
+                <a href="{% url 'logout' %}" class="p-0 col-2 col-md-1 text-center my-auto text-dark logout-button nav-text">Logout</a>
             {% else %}
-                <a href="#" class="p-0 col-2 col-md-2 text-center my-auto text-light login-button nav-text">Login</a>
+                <a href="#" class="p-0 col-4 col-md-2 text-center my-auto text-dark login-button nav-text">Login</a>
             {% endif %}                     
         </nav>            
         <!-- Message template -->  
@@ -49,8 +50,8 @@
             {% endblock %}
         </div>   
 
-        <footer class="footer text-danger text-center h6 m-0">            
-            <div class="p-1 bg-dark text-info">2021</div>            
+        <footer class="footer text-center h6 m-0">            
+            <div class="p-1 bg-danger text-dark">2021</div>            
         </footer>
         
          <!-- login Modal -->    

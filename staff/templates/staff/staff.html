@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}  
+    <link rel="stylesheet" href="{% static 'staff/css/home.css' %}">          
+{% endblock %}
+
+{% block content %}
+    <div class="h1">Staff Page</div>           
+{% endblock %}
+
+{% block extra_js %}              
+    <script src="{% static 'staff/js/home.js' %}" type="text/javascript"></script>
+{% endblock %}

@@ -59,10 +59,10 @@ input {
 
 .box {     
     border: solid 1px rgb(0, 0, 0);
-    background: rgba(177, 171, 171,0.9);
+    background: rgba(245, 240, 240, 0.9);
     align-items: center;
     border-radius: 5px;
-    color:rgb(92, 136, 202);
+    color:rgb(0, 0, 0);
 }
 
 /* Media screen */
