@@ -24,3 +24,81 @@ nav a {
     position: fixed; 
     display: none;
 }
+
+/* Modal */
+.modal { 
+    width: 40%;      
+    left: 30%;
+    top: 25%; 
+    z-index: 1;          
+}
+
+input {
+    height: 30px;    
+}
+
+.password-bar {
+    width: 100% !important;
+}
+
+.append-eye {
+    text-align: right;
+    border: 1px solid #ced4da;
+    border-left: none;
+    height: 30px;
+    line-height: 20px;
+    padding-right: 5px;      
+} 
+
+/* Flash messages */
+.flash-message {
+    position: absolute;
+    top: 75px;
+    right: 10px;
+}
+
+.box {     
+    border: solid 1px rgb(0, 0, 0);
+    background: rgba(177, 171, 171,0.9);
+    align-items: center;
+    border-radius: 5px;
+    color:rgb(92, 136, 202);
+}
+
+/* Media screen */
+@media screen and (max-width: 768px){
+
+    .modal { 
+        width: 60% !important;      
+        left: 20%;        
+    }   
+}
+
+@media screen and (max-width: 560px){    
+    .modal { 
+        width: 90% !important;      
+        left: 5%;        
+    }
+    
+    .button {
+        font-size: 12px;
+    }
+
+    .modal-title {
+        font-size: 14px;
+    }
+
+    input {
+        height: 25px;
+        font-size: 14px !important;
+    }
+
+    .append-eye {        
+        height: 25px;        
+    } 
+
+    .nav-text {        
+        font-size: 14px;        
+    } 
+}
+

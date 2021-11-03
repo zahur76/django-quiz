@@ -18,10 +18,16 @@
         <title>Django-Quiz</title>
     </head>
     <body>        
-        <nav class="row m-0 bg-dark">            
-            <div class="col-12 h1 text-center">
-                <a class="text-info" href="{% url 'home' %}">Quiz Site</a>
-            </div>            
+        <nav class="row m-0 bg-dark">
+            <div class="d-none d-md-block col-md-2"></div>            
+            <div class="col-9 col-md-8 h1 text-center">
+                <a class="text-info" href="{% url 'home' %}">Quiz</a>
+            </div> 
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="p-0 col-2 col-md-1 text-center my-auto text-light logout-button nav-text">Logout</a>
+            {% else %}
+                <a href="#" class="p-0 col-2 col-md-1 text-center my-auto text-light login-button nav-text">Login</a>
+            {% endif %}                     
         </nav>            
         <!-- Message template -->  
         {% if messages %}            
@@ -34,7 +40,34 @@
 
         <footer class="footer text-danger text-center h6 m-0">            
             <div class="p-1 bg-dark text-info">2021</div>            
-        </footer> 
+        </footer>
+        
+         <!-- login Modal -->    
+         <div id="loginModal" class="modal login-modal">
+            <div class="modal-content mt-0 border-info bg-dark">                                     
+                <div class="choose mb-2">
+                    <h5 class="text-center text-info modal-title">Enter username and password</h5> 
+                    <h6 class="error-message text-danger text-center"></h6>                             
+                </div>
+                <div class="w-75 mx-auto mb-2 mb-sm-3">
+                    <form action="{% url 'login' %}" method="POST" id="login-form">
+                        {% csrf_token %}
+                        <div class="form-group mb-2">                      
+                            <input type="text" class="form-control w-100 rounded-0" id="username" name="username" 
+                                    placeholder="username" autocomplete="on"/ required>
+                        </div>                       
+                        <div class="input-group mb-2">
+                            <input type="password" class="form-control rounded-0" name="password" id="password" placeholder="Password" autocomplete="on"/ required>
+                            <div class="input-group-append">
+                              <button class="input-group-append append-eye bg-light"><i class="eye-icon btn m-0 p-0 fas fa-eye"></i></button>
+                            </div>
+                        </div>                                                    
+                        <button type="submit" class="btn btn-secondary text-light p-1 p-md-2">Submit</button>
+                        <button type="button" class="btn btn-secondary text-light close p-1 p-md-2">Close</button>
+                    </form>                                                     
+                </div> 
+            </div>            
+        </div>
 
         {% block corejs %} 
             <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -45,3 +78,5 @@
 
         {% block extra_js %}                                      
         {% endblock %}
+    </body>     
+</html>
