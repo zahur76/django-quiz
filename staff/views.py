@@ -45,7 +45,6 @@ def add_staff(request):
             return redirect(reverse('staff'))
         messages.error(
             request, 'Staff could not be added!')
-        print(form.errors.as_data())
         new_form = add_staffForm()
 
         context = {

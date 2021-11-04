@@ -8,7 +8,17 @@
 {% block content %}
     <div class="h1 text-center mt-2">Quiz Management</div>
     <a href="{% url 'staff' %}" class="btn btn-dark text-light rounded-0 m-2">Back</a>
-    <a href="{% url 'add_quiz' %}" class="btn btn-dark text-light rounded-0 m-2">+Quiz</a>              
+    <a href="{% url 'add_quiz' %}" class="btn btn-dark text-light rounded-0 m-2">+Quiz</a>
+    <div class="row m-0 container mt-3">
+        {% for quiz in quizzes %}
+            <a href="#" class="col-6 col-md-3">{{ forloop.counter }}.{{ quiz }}</a>
+            <div class="col-6 col-md-3">
+                <a href="{% url 'delete_quiz' quiz_id=quiz.id %}" class="text-danger">Delete/</a>
+                <a href="#" class="text-info">Update</a>
+            </div>
+            <div class="d-none d-block-md col-md-6"></div>          
+        {% endfor %}  
+    </div>                
 {% endblock %}
 
 {% block extra_js %}              
