@@ -69,11 +69,10 @@ def update_quiz(request, quiz_id):
             form.save()
             messages.success(request, 'Quiz updated!')
             return redirect(reverse('quiz'))
-        else:
-            messages.error(
-                request, 'Quiz could not be updated. \
-                    Tru again.')
-            return redirect(reverse('quiz'))
+        messages.error(
+            request, 'Quiz could not be updated. \
+                Try again.')
+        return redirect(reverse('quiz'))
     form = add_quizForm(instance=quiz)
     context = {
         'form': form,
@@ -106,7 +105,7 @@ def add_question(request, quiz_id):
         return redirect(reverse('home'))
     quiz = get_object_or_404(Quiz, id=quiz_id)
     if request.method == 'POST':
-        form = add_questionForm(request.POST)        
+        form = add_questionForm(request.POST)
         if form.is_valid():
             question_form = form.save(commit=False)
             question_form.quiz=quiz
@@ -132,3 +131,26 @@ def delete_question(request, question_id):
     question.delete()
     messages.success(request, 'Questions deleted!')
     return redirect(reverse('quiz'))
+
+def update_question(request, question_id):
+    """View to update quiz name"""
+    if not request.user.is_superuser:
+        messages.error(request, 'Permision Denied!.')
+        return redirect(reverse('home'))
+    question = get_object_or_404(Questions, id=question_id)
+    if request.method == 'POST':
+        form = add_questionForm(request.POST, request.FILES, instance=question)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Question updated!')
+            return redirect(reverse('quiz'))
+        messages.error(
+            request, 'Question could not be updated. \
+                Try again.')
+        return redirect(reverse('quiz'))
+    form = add_questionForm(instance=question)
+    context = {
+        'question': question,
+        'form': form,
+        }
+    return render(request, 'quiz/update_question.html', context)
