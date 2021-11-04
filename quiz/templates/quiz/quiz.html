@@ -11,7 +11,7 @@
     <a href="{% url 'add_quiz' %}" class="btn btn-dark text-light rounded-0 m-2">+Quiz</a>
     <div class="row m-0 container mt-3">
         {% for quiz in quizzes %}
-            <a href="#" class="col-6 col-md-3">{{ forloop.counter }}.{{ quiz }}</a>
+            <a href="{% url 'questionnaire' quiz_id=quiz.id %}" class="col-6 col-md-3">{{ forloop.counter }}.{{ quiz }}</a>
             <div class="col-6 col-md-3">
                 <a href="{% url 'delete_quiz' quiz_id=quiz.id %}" class="text-danger">Delete/</a>
                 <a href="{% url 'update_quiz' quiz_id=quiz.id %}" class="text-info">Update</a>

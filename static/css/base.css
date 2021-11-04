@@ -30,7 +30,10 @@ nav a {
     width: 40%;      
     left: 30%;
     top: 25%; 
-    z-index: 1;          
+}
+
+.modal-content {
+    z-index: 1;
 }
 
 input {

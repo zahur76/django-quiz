@@ -2,7 +2,7 @@ from django.shortcuts import (
     render, redirect, reverse, get_object_or_404)
 from django.contrib import messages
 from .forms import add_quizForm
-from .models import Quiz
+from .models import Quiz, Questions
 
 # Create your views here.
 def quiz(request):
@@ -49,12 +49,16 @@ def delete_quiz(request, quiz_id):
         messages.error(request, 'Permision Denied!.')
         return redirect(reverse('home'))
     quiz = get_object_or_404(Quiz, id=quiz_id)
-    quiz.delete()
+    questions = Questions.objects.all().filter(quiz=quiz_id)
+    if quiz:
+        quiz.delete()
+    if questions:
+        questions.delete()    
     messages.success(request, 'Quiz record deleted!')
     return redirect(reverse('quiz'))
 
 def update_quiz(request, quiz_id):
-    """View for quiz management"""
+    """View to update quiz name"""
     if not request.user.is_superuser:
         messages.error(request, 'Permision Denied!.')
         return redirect(reverse('home'))
@@ -76,3 +80,13 @@ def update_quiz(request, quiz_id):
         'quiz': quiz,
         }
     return render(request, 'quiz/update_quiz.html', context)
+
+def questionnaire(request, quiz_id):
+    """View to view Questionnaire"""
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    questions = Questions.objects.all().filter(quiz=quiz_id)
+    context = {
+        'quiz': quiz,
+        'questions': questions,
+    }
+    return render(request, 'quiz/questionnaire.html', context)

@@ -10,6 +10,10 @@
     height: 34px;
 }
 
+.button {
+    z-index: 999;
+}
+
 /* Media Screen */
 @media screen and (max-width: 992px){    
     .add-staff-form {
