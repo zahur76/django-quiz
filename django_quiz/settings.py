@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',        
+    'django.contrib.staticfiles',
+    'crispy_forms',
+
     'home',
     'login',
     'staff',
@@ -55,6 +57,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'django_quiz.urls'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TEMPLATES = [
     {

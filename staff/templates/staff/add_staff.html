@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extra_css %}  
+    <link rel="stylesheet" href="{% static 'staff/css/staff.css' %}">          
+{% endblock %}
+
+{% block content %}
+    <div class="text-center h1 mb-3">Add Staff</div>
+    <div class="col-12 mx-auto mb-2 add-staff-form w-25">
+        <form id="mystaffForm" action="{% url 'add_staff' %}" method="POST" enctype="multipart/form-data" class="addStaff">
+            {% csrf_token %}
+            {{ form|crispy }}         
+            <button class="btn btn-dark text-light mt-2" type="submit" form="mystaffForm">submit</button>
+            <a href="{% url 'staff' %}" class="btn btn-dark text-light mt-2">Back</a>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_js %}              
+    <script src="{% static 'staff/js/staff.js' %}" type="text/javascript"></script>
+{% endblock %}

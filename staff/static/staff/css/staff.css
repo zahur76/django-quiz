@@ -6,11 +6,29 @@
     height: 38px;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 /* Media Screen */
+@media screen and (max-width: 992px){    
+    .add-staff-form {
+        width: 40% !important;
+    }
+}
+
 @media screen and (max-width: 768px){
     .staff-text{        
         font-size: 14px;
-    } 
+    }
+    .btn {
+        font-size: 12px !important;
+    }
+    .add-staff-form {
+        width: 50% !important;
+    }
 }
 
 @media screen and (max-width: 560px){    
@@ -23,5 +41,7 @@
     .search-button {
         line-height: 14px;
     }
-
+    .add-staff-form {
+        width: 80% !important;
+    }
 }
