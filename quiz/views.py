@@ -82,19 +82,15 @@ def update_quiz(request, quiz_id):
     return render(request, 'quiz/update_quiz.html', context)
 
 def questionnaire(request, quiz_id, num=0):
-    """View to view Questionnaire"""
-    print(num)
+    """View to view Questionnaire"""    
     quiz = get_object_or_404(Quiz, id=quiz_id)
     questions = Questions.objects.all().filter(quiz=quiz_id)
     question_id=[]
     for question in questions:
         question_id.append(question.id)
-    print(question_id)
     actual_question = get_object_or_404(Questions, id=question_id[num])
-    
     final = len(question_id)
-    print(final)
-    print(num)
+
     context = {
         'final': final,
         'next': num+1,
@@ -126,3 +122,13 @@ def add_question(request, quiz_id):
         'form': form,
     }
     return render(request, 'quiz/add_question.html', context)
+
+def delete_question(request, question_id):
+    """View to delete question"""
+    if not request.user.is_superuser:
+        messages.error(request, 'Permision Denied!.')
+        return redirect(reverse('home'))    
+    question = get_object_or_404(Questions, id=question_id)
+    question.delete()
+    messages.success(request, 'Questions deleted!')
+    return redirect(reverse('quiz'))

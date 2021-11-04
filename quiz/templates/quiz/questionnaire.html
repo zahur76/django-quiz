@@ -9,7 +9,7 @@
     <div class="h1 text-center mt-2">{{ quiz.quiz_name }}</div>    
     {% if request.user.is_superuser %}
         <a href="{% url 'quiz' %}" class="m-2 btn btn-dark rounded-0 text-light">Back</a>
-        <a href="#" class="m-2 btn btn-danger rounded-0 text-light">Delete</a>
+        <a href="{% url 'delete_question' question_id=question.id %}" class="m-2 btn btn-danger rounded-0 text-light">Delete</a>
         <a href="#" class="btn btn-info rounded-0 text-light">Modify</a>
     {% endif %} 
     <div class="row m-0 mt-3">        
