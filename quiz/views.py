@@ -1,7 +1,7 @@
 from django.shortcuts import (
     render, redirect, reverse, get_object_or_404)
 from django.contrib import messages
-from .forms import add_quizForm
+from .forms import add_quizForm, add_questionForm
 from .models import Quiz, Questions
 
 # Create your views here.
@@ -90,3 +90,16 @@ def questionnaire(request, quiz_id):
         'questions': questions,
     }
     return render(request, 'quiz/questionnaire.html', context)
+
+def add_question(request, quiz_id):
+    """View to add Questions"""
+    if not request.user.is_superuser:
+        messages.error(request, 'Permision Denied!.')
+        return redirect(reverse('home'))
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    form = add_questionForm()
+    context = {
+        'quiz': quiz,
+        'form': form,
+    }
+    return render(request, 'quiz/add_question.html', context)

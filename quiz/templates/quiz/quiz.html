@@ -16,7 +16,10 @@
                 <a href="{% url 'delete_quiz' quiz_id=quiz.id %}" class="text-danger">Delete/</a>
                 <a href="{% url 'update_quiz' quiz_id=quiz.id %}" class="text-info">Update</a>
             </div>
-            <div class="d-none d-block-md col-md-6"></div>          
+            <div class="d-none d-block-md col-md-6"></div>
+            <div>
+                <a href="{% url 'add_question' quiz_id=quiz.id %}" class="btn btn-warning rounded-0 p-1">+Question</a> 
+            </div>
         {% endfor %}  
     </div>                
 {% endblock %}
