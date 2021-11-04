@@ -10,7 +10,7 @@
     <div class="h1 text-center mt-2">Add question</div>
     <a href="{% url 'quiz' %}" class="btn btn-dark text-light rounded-0 m-2">Back</a>    
     <div class="mx-auto mb-2 add-quiz-form">
-        <form id="add-quiz-form" action="#" method="POST" enctype="multipart/form-data" class="addQuiz">
+        <form id="add-quiz-form" action="{% url 'add_question' quiz_id=quiz.id %}" method="POST" enctype="multipart/form-data" class="addQuiz">
             {% csrf_token %}
             {{ form|crispy }} 
             <button class="btn btn-dark text-light mt-2 rounded-0" type="submit" form="add-quiz-form">Add</button>

@@ -6,32 +6,33 @@
 {% endblock %}
 
 {% block content %}
-    <div class="h1 text-center mt-2">{{ quiz.quiz_name }}</div>
+    <div class="h1 text-center mt-2">{{ quiz.quiz_name }}</div>    
     {% if request.user.is_superuser %}
         <a href="{% url 'quiz' %}" class="m-2 btn btn-dark rounded-0 text-light">Back</a>
         <a href="#" class="m-2 btn btn-danger rounded-0 text-light">Delete</a>
         <a href="#" class="btn btn-info rounded-0 text-light">Modify</a>
     {% endif %} 
-    <div class="row m-0 mt-3">
-        {% for question in questions %}
-            <div class="col-2 mb-2"></div>
-            <div class="col-10 mb-3 h3">Q1. {{ question.question }}</div>
-            <div class="col-2 mb-2"></div>
-            <div class="col-10 mb-2 h3">A. {{ question.first_answer }}</div>
-            <div class="col-2 mb-2"></div>
-            <div class="col-10 mb-2 h3">B. {{ question.second_answer }}</div>
-            <div class="col-2 mb-2"></div>
-            <div class="col-10 mb-2 h3">C. {{ question.third_answer  }}</div>
-            <div class="col-2 mb-2"></div>
-            <div class="col-10 mb-2 h3">D. {{ question.fourth_answer }}</div>
-        {% endfor %}
+    <div class="row m-0 mt-3">        
+        <div class="col-2 mb-2"></div>
+        <div class="col-10 mb-3 h4">Q{{ next }}. {{ question.question }}</div>
+        <div class="col-2 mb-2"></div>
+        <div class="col-10 mb-2 h4">A. {{ question.first_answer }}</div>
+        <div class="col-2 mb-2"></div>
+        <div class="col-10 mb-2 h4">B. {{ question.second_answer }}</div>
+        <div class="col-2 mb-2"></div>
+        <div class="col-10 mb-2 h4">C. {{ question.third_answer  }}</div>
+        <div class="col-2 mb-2"></div>
+        <div class="col-10 mb-2 h4">D. {{ question.fourth_answer }}</div>
     </div>
     <div class="row m-0 mt-3">
         <div class="col-2"></div>
-        {% if questions %}
+        {% if question %}
             <div class="col-10">
                 <a href="#" class="btn btn-success rounded-0 text-light">check Answer</a>
-                <a href="#" class="btn btn-dark rounded-0 text-light">Next</a>    
+                {% if final != next %}
+                    <a href="{% url 'questionnaire' quiz.id next %}" class="btn btn-dark rounded-0 text-light">Next</a>    
+                {% else %}
+                {% endif %}
             </div>
         {% endif %}
     </div>               

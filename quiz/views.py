@@ -81,13 +81,25 @@ def update_quiz(request, quiz_id):
         }
     return render(request, 'quiz/update_quiz.html', context)
 
-def questionnaire(request, quiz_id):
+def questionnaire(request, quiz_id, num=0):
     """View to view Questionnaire"""
+    print(num)
     quiz = get_object_or_404(Quiz, id=quiz_id)
     questions = Questions.objects.all().filter(quiz=quiz_id)
+    question_id=[]
+    for question in questions:
+        question_id.append(question.id)
+    print(question_id)
+    actual_question = get_object_or_404(Questions, id=question_id[num])
+    
+    final = len(question_id)
+    print(final)
+    print(num)
     context = {
+        'final': final,
+        'next': num+1,
         'quiz': quiz,
-        'questions': questions,
+        'question': actual_question,
     }
     return render(request, 'quiz/questionnaire.html', context)
 
@@ -97,6 +109,17 @@ def add_question(request, quiz_id):
         messages.error(request, 'Permision Denied!.')
         return redirect(reverse('home'))
     quiz = get_object_or_404(Quiz, id=quiz_id)
+    if request.method == 'POST':
+        form = add_questionForm(request.POST)        
+        if form.is_valid():
+            question_form = form.save(commit=False)
+            question_form.quiz=quiz
+            question_form.save()
+            messages.success(request, 'Question Added!')
+            return redirect(reverse('quiz'))
+        messages.error(
+            request, 'Question could not be added, try again!')
+
     form = add_questionForm()
     context = {
         'quiz': quiz,
