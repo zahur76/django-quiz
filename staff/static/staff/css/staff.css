@@ -1,3 +1,7 @@
+.staff-text a {
+    text-decoration: none;
+}
+
 .bg-secondary {
     background: lightgray !important;
 }

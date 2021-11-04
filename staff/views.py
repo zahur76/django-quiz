@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import (
+    render, redirect, reverse, get_object_or_404)
 from django.contrib import messages
 from .models import Staff
 from .forms import add_staffForm
@@ -53,3 +54,14 @@ def add_staff(request):
         'form': form,
         }
     return render(request, 'staff/add_staff.html', context)
+
+def delete_staff(request, staff_id):
+    """ A view to update staff details"""
+    if not request.user.is_superuser:
+            messages.error(request, 'Access Denied!')
+            return redirect(reverse('home'))
+    else:
+        staff = get_object_or_404(Staff, id=staff_id)
+        staff.delete()
+        messages.success(request, 'Staff record deleted!')
+        return redirect(reverse('staff'))

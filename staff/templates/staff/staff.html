@@ -31,9 +31,11 @@
         <div class="col-2">                
             Last Name
         </div>
-        <div class="col-6">
+        <div class="col-6 col-md-5">
             Email               
         </div>
+        <div class="d-none d-md-block col-md-1">    
+        </div>        
     </div>
     <div class="row m-0 text-center staff-text">
         {% for staff in all_staff %}
@@ -47,9 +49,12 @@
                 <div class="col-2">                
                     {{ staff.last_name }}
                 </div>
-                <div class="col-6">
+                <div class="col-6 col-md-5">
                     {{ staff.email_address }}                
                 </div>
+                <a href="{% url 'delete_staff' staff_id=staff.id %}" class="d-none d-md-block col-md-1 text-danger">                
+                    Del
+                </a>
             {% else %}
                 <div class="col-2 bg-secondary">                
                     {{ staff.employee_number}}
@@ -60,9 +65,12 @@
                 <div class="col-2 bg-secondary">                
                     {{ staff.last_name }}
                 </div>
-                <div class="col-6 bg-secondary">
+                <div class="col-6 col-md-5 bg-secondary">
                     {{ staff.email_address }}                
                 </div>
+                <a href="{% url 'delete_staff' staff_id=staff.id %}" class="d-none d-md-block col-md-1 bg-secondary text-danger">                
+                    Del
+                </a>
             {% endif %}            
     {% endfor %}
     </div>         
