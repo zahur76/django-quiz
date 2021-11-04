@@ -16,14 +16,14 @@ def staff(request):
         query = request.GET['q']
         if not query:
             return redirect(reverse('staff'))        
-        all_staff = Staff.objects.all()
+        all_staff = Staff.objects.all().order_by('employee_number')
         queries = Q(first_name__icontains=query) | Q(last_name__icontains=query)
         query_staff = all_staff.filter(queries)
         context = {
             'all_staff': query_staff,
         }
-        return render(request, 'staff/staff.html', context)         
-    all_staff = Staff.objects.all()
+        return render(request, 'staff/staff.html', context)
+    all_staff = Staff.objects.all().order_by('employee_number')
     context = {
         'all_staff': all_staff,
     }
@@ -42,14 +42,18 @@ def add_staff(request):
             form.save()
             messages.success(request, 'Staff Added!')
             return redirect(reverse('staff'))
-        else:
-            messages.error(
-                request, 'Staff could not be added. \
-                    Please ensure the form is valid.')
-            return redirect(reverse('add_staff'))
+        messages.error(
+            request, 'Staff could not be added!')
+        print(form.errors.as_data())
+        new_form = add_staffForm()
+
+        context = {
+            'errors': form.errors.values(),
+            'form': new_form,
+            }
+        return render(request, 'staff/add_staff.html', context)
 
     form = add_staffForm()
-    print(form)
     context = {
         'form': form,
         }

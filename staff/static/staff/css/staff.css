@@ -16,6 +16,14 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
+.error-text {
+    font-size: 12px;
+}
+
+.add-staff-form {
+    width: 25% !important;
+}
+
 /* Media Screen */
 @media screen and (max-width: 992px){    
     .add-staff-form {

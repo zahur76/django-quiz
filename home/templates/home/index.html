@@ -6,7 +6,15 @@
 {% endblock %}
 
 {% block content %}
-    <div class="h1">My home page</div>           
+    <div class="h1 text-center mt-2">Technical Quiz</div>
+    <div class="h3 text-center mt-3">Enter Employee Number</div>
+    <div class="col-12 mx-auto mt-5 add-staff-form">
+        <form id="staff-id" action="#" method="POST" enctype="multipart/form-data" class="addStaff">
+            {% csrf_token %}            
+            <input class="w-75" type="text" id="fname" name="fname" placeholder="Employee number" required>
+            <button class="btn btn-dark border-0 text-light p-1 mb-1 submit-employee" type="submit" form="staff-id">submit</button>
+        </form>
+    </div>          
 {% endblock %}
 
 {% block extra_js %}              

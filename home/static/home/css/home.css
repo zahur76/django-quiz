@@ -1,3 +1,33 @@
 .content {
-    background: rgb(185, 179, 179);
+    background: rgb(238, 234, 234);
+}
+
+.add-staff-form {
+    width: 25% !important;
+}
+
+#fname {
+    height: 32px;
+}
+
+/* Media Screen */
+@media screen and (max-width: 992px){    
+    .add-staff-form {
+        width: 40% !important;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .add-staff-form {
+        width: 50% !important;
+    }
+}
+
+@media screen and (max-width: 560px){   
+    .add-staff-form {
+        width: 80% !important;
+    }
+    .submit-employee {
+        margin-bottom: 2px !important;
+    }
 }
