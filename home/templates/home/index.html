@@ -9,12 +9,20 @@
     <div class="h1 text-center mt-2">Technical Quiz</div>
     <div class="h3 text-center mt-3">Enter Employee Number</div>
     <div class="col-12 mx-auto mt-5 add-staff-form">
-        <form id="staff-id" action="#" method="POST" enctype="multipart/form-data" class="addStaff">
-            {% csrf_token %}            
-            <input class="w-75" type="text" id="fname" name="fname" placeholder="Employee number" required>
-            <button class="btn btn-dark border-0 text-light p-1 mb-1 submit-employee" type="submit" form="staff-id">submit</button>
+        <form id="staff-id" action="{% url 'home' %}" method="POST" enctype="multipart/form-data" class="addStaff">
+            {% csrf_token %}
+            <div class="input-group">
+                <input class="form-control" type="text" id="employee_num" name="employee_num" placeholder="Employee number" required>
+                <button class="btn btn-dark border-0 input-group-append text-light p-1 mb-1 submit-employee" type="submit" form="staff-id">submit</button>
+            </div>            
         </form>
-    </div>          
+    </div>
+    {% if staff %}
+        <div class="col-12 text-center mt-3"><b>Employee Number:</b> {{ staff.employee_number }}</div>
+        <div class="col-12 text-center"><b>Name:</b> {{ staff.first_name }} {{ staff.last_name }}</div>
+        <div class="col-12 text-center mb-5"><b>Email:</b> {{ staff.email_address }}</div>
+        <a href="#" class="col-6 offset-3 btn btn-success text-light">Start Quiz</a>
+    {% endif %}          
 {% endblock %}
 
 {% block extra_js %}              
