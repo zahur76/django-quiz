@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}  
+    <link rel="stylesheet" href="{% static 'quiz/css/quiz.css' %}">          
+{% endblock %}
+
+{% block content %}
+    <div class="h1 text-center mt-2">Quiz Management</div>
+    <a href="{% url 'staff' %}" class="btn btn-dark text-light rounded-0 m-2">Back</a>
+    <a href="{% url 'add_quiz' %}" class="btn btn-dark text-light rounded-0 m-2">+Quiz</a>              
+{% endblock %}
+
+{% block extra_js %}              
+    <script src="{% static 'quiz/js/quiz.js' %}" type="text/javascript"></script>
+{% endblock %}

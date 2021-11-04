@@ -13,7 +13,7 @@
             {% csrf_token %}
             <div class="input-group">
                 <input class="form-control" type="text" id="employee_num" name="employee_num" placeholder="Employee number" required>
-                <button class="btn btn-dark border-0 input-group-append text-light p-1 mb-1 submit-employee" type="submit" form="staff-id">submit</button>
+                <button class="btn btn-dark rounded-0 input-group-append text-light p-1 mb-1 submit-employee" type="submit" form="staff-id">submit</button>
             </div>            
         </form>
     </div>
@@ -21,7 +21,7 @@
         <div class="col-12 text-center mt-3"><b>Employee Number:</b> {{ staff.employee_number }}</div>
         <div class="col-12 text-center"><b>Name:</b> {{ staff.first_name }} {{ staff.last_name }}</div>
         <div class="col-12 text-center mb-5"><b>Email:</b> {{ staff.email_address }}</div>
-        <a href="#" class="col-6 offset-3 btn btn-success text-light">Start Quiz</a>
+        <a href="#" class="col-6 offset-3 btn btn-success rounded-0 text-light">Start Quiz</a>
     {% endif %}          
 {% endblock %}
 

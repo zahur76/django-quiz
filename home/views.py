@@ -19,5 +19,5 @@ def home(request):
                 'staff': staff,
             }
             return render(request, 'home/index.html', context)
-        
+
     return render(request, 'home/index.html')

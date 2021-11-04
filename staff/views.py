@@ -1,9 +1,10 @@
 from django.shortcuts import (
     render, redirect, reverse, get_object_or_404)
 from django.contrib import messages
+from django.db.models import Q
 from .models import Staff
 from .forms import add_staffForm
-from django.db.models import Q
+
 
 # Create your views here.
 def staff(request):
@@ -15,7 +16,7 @@ def staff(request):
     if 'q' in request.GET:
         query = request.GET['q']
         if not query:
-            return redirect(reverse('staff'))        
+            return redirect(reverse('staff'))
         all_staff = Staff.objects.all().order_by('employee_number')
         queries = Q(first_name__icontains=query) | Q(last_name__icontains=query)
         query_staff = all_staff.filter(queries)
@@ -62,10 +63,9 @@ def add_staff(request):
 def delete_staff(request, staff_id):
     """ A view to update staff details"""
     if not request.user.is_superuser:
-            messages.error(request, 'Access Denied!')
-            return redirect(reverse('home'))
-    else:
-        staff = get_object_or_404(Staff, id=staff_id)
-        staff.delete()
-        messages.success(request, 'Staff record deleted!')
-        return redirect(reverse('staff'))
+        messages.error(request, 'Access Denied!')
+        return redirect(reverse('home'))
+    staff = get_object_or_404(Staff, id=staff_id)
+    staff.delete()
+    messages.success(request, 'Staff record deleted!')
+    return redirect(reverse('staff'))

@@ -1,0 +1,22 @@
+.add-quiz-form {
+    width: 25%;
+}
+
+/* Media screen */
+@media screen and (max-width: 992px){
+    .add-quiz-form {
+        width: 40%;
+    }     
+}
+
+@media screen and (max-width: 768px){
+    .add-quiz-form {
+        width: 50%;
+    }     
+}
+
+@media screen and (max-width: 560px){    
+    .add-quiz-form {
+        width: 80%;
+    }
+}
