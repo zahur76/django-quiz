@@ -14,7 +14,7 @@
             <a href="#" class="col-6 col-md-3">{{ forloop.counter }}.{{ quiz }}</a>
             <div class="col-6 col-md-3">
                 <a href="{% url 'delete_quiz' quiz_id=quiz.id %}" class="text-danger">Delete/</a>
-                <a href="#" class="text-info">Update</a>
+                <a href="{% url 'update_quiz' quiz_id=quiz.id %}" class="text-info">Update</a>
             </div>
             <div class="d-none d-block-md col-md-6"></div>          
         {% endfor %}  
