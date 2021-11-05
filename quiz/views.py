@@ -10,7 +10,7 @@ import string
 import json
 
 def randon_word(length):
-    """Generate random word"""    
+    """Generate random word"""
     alphabet = string.ascii_letters + string.digits + string.punctuation
     password = ''.join(secrets.choice(alphabet) for i in range(length))
 
@@ -18,11 +18,20 @@ def randon_word(length):
 
 @require_POST
 def save_answer(request):
-    """View to save answer to session"""  
-    answer = request.POST.get('answer')
-    print(answer)
-
-    return HttpResponse(status=200)
+    """View to save answer to session"""
+    request.session.modified = True
+    result = request.POST.get('answer')
+    id = request.POST.get('id')
+    if request.user.is_superuser:
+        return HttpResponse(status=200)
+    else:
+        if result=='correct':
+            request.session['answer'][id] = 1
+            print(request.session['answer'])
+            return HttpResponse(status=200)
+        request.session['answer'][id] = 0
+        print(request.session['answer'])
+        return HttpResponse(status=200)
 
 # Create your views here.
 def quiz(request):
@@ -73,7 +82,7 @@ def delete_quiz(request, quiz_id):
     if quiz:
         quiz.delete()
     if questions:
-        questions.delete()    
+        questions.delete()
     messages.success(request, 'Quiz record deleted!')
     return redirect(reverse('quiz'))
 
@@ -102,6 +111,15 @@ def update_quiz(request, quiz_id):
 
 def questionnaire(request, quiz_id, num=0):
     """View to view Questionnaire"""
+    if num==0 and 'answer' not in request.session:
+        print('shabana')
+        request.session['answer']= {}
+        print(request.session['answer'])
+    else:
+        print('session exists')
+    print(num)
+    answered = request.session['answer']
+    print(answered)
     quiz = get_object_or_404(Quiz, id=quiz_id)
     questions = Questions.objects.all().filter(quiz=quiz_id)
     question_id=[]
@@ -113,7 +131,8 @@ def questionnaire(request, quiz_id, num=0):
         "A": randon_word(6),
         "B": randon_word(6),
         "C": randon_word(6),
-        "D": randon_word(6)
+        "D": randon_word(6),
+        "id": actual_question.id,
         }
     answer = crypt[actual_question.answer]
     context = {
@@ -188,24 +207,10 @@ def update_question(request, question_id):
         }
     return render(request, 'quiz/update_question.html', context)
 
-# def check_answer(request, question_id):
-#     """View to check answer"""
-#     if request.method == 'POST':
-#         question_list=[]
-#         answer = request.POST['answer']
-#         question = get_object_or_404(Questions, id=question_id)
-#         if question.answer == answer:
-#             print('answer correct')
-#             result = 'correct'
-#             all_questions = Questions.objects.all()
-#             for questions in all_questions:
-#                 question_list.append(questions.id)
-#             return redirect(reverse(
-#                         'questionnaire', args=[question.quiz.id, question_list.index(question.id)]))
-#         print('answer incorrect')
-#         all_questions = Questions.objects.all()
-#         for questions in all_questions:
-#             question_list.append(questions.id)
-#         return redirect(reverse(
-#                     'questionnaire', args=[question.quiz.id, question_list.index(question.id)]))
-        
+def results(request):
+    """View to show resulst"""
+    if 'answer' in request.session:        
+        del request.session['answer']
+    
+    
+    return render(request, 'home/index.html')

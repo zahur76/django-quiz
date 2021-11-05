@@ -36,6 +36,7 @@
                 {% if final != next %}
                     <button type="submit" form="answer" class="next btn btn-dark rounded-0 text-light">Next</button>    
                 {% else %}
+                    <a href="{% url 'results' %}" class="next btn btn-dark rounded-0 text-light">Results</a>
                 {% endif %}
             </div>
         {% endif %}
