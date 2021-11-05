@@ -25,21 +25,24 @@
                 <label><input type="radio" name="answer" value="D.{{ question.fourth_answer }}"> D. {{ question.fourth_answer }}</label>
             </form>
         </div>
-        <div class="correct_answer">{{ question.answer }}</div>
+        <div class="correct_answer">{{ answer }}</div>
         <div class="col-12 result text-center text-success"></div>      
     </div>
     <div class="row m-0 mt-3">
         <div class="col-2"></div>
         {% if question %}
             <div class="col-10">
-                <button class="check btn btn-success rounded-0 text-light">check Answer</button>
+                <button class="check btn btn-success rounded-0 text-light">Check Answer</button>
                 {% if final != next %}
                     <button type="submit" form="answer" class="next btn btn-dark rounded-0 text-light">Next</button>    
                 {% else %}
                 {% endif %}
             </div>
         {% endif %}
-    </div>               
+    </div>
+    <script>
+        var Data = JSON.parse('{{ crypt | escapejs }}');
+    </script>               
 {% endblock %}
 
 {% block extra_js %}              

@@ -11,10 +11,16 @@ $(document).ready(function(){
         $(".check").removeAttr("disabled");             
     });
 
+    function getKeyByValue(object, value) {
+        return Object.keys(object).find(key => object[key] === value);
+      }
+
+    correctAnswer = $(".correct_answer").text();
+    
     $(".check").click(function(){
-        correctAnswer = $(".correct_answer").text();
-        givenAnswer = $('input[name="answer"]:checked').val().split(".");
-        console.log(givenAnswer)
+        correctAnswer = getKeyByValue(Data, correctAnswer);
+        console.log(correctAnswer)
+        givenAnswer = $('input[name="answer"]:checked').val().split(".");        
         if(correctAnswer==givenAnswer[0]){
             $(".result").html('Correct Answer!')
         }else{

@@ -4,6 +4,16 @@ from django.shortcuts import (
 from django.contrib import messages
 from .forms import add_quizForm, add_questionForm
 from .models import Quiz, Questions
+import secrets
+import string
+import json
+
+def randon_word(length):
+    """Generate random word"""    
+    alphabet = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(secrets.choice(alphabet) for i in range(length))
+
+    return password
 
 # Create your views here.
 def quiz(request):
@@ -90,8 +100,16 @@ def questionnaire(request, quiz_id, num=0):
         question_id.append(question.id)
     actual_question = get_object_or_404(Questions, id=question_id[num])
     final = len(question_id)
-
+    crypt= {
+        "A": randon_word(6),
+        "B": randon_word(6),
+        "C": randon_word(6),
+        "D": randon_word(6)
+        }
+    answer = crypt[actual_question.answer]
     context = {
+        'crypt': json.dumps(crypt),
+        'answer': answer,
         'final': final,
         'next': num+1,
         'quiz': quiz,
