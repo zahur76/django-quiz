@@ -1,6 +1,7 @@
 from django.db.models.query_utils import Q
+from django.views.decorators.http import require_POST
 from django.shortcuts import (
-    render, redirect, reverse, get_object_or_404)
+    render, redirect, reverse, get_object_or_404, HttpResponse)
 from django.contrib import messages
 from .forms import add_quizForm, add_questionForm
 from .models import Quiz, Questions
@@ -14,6 +15,14 @@ def randon_word(length):
     password = ''.join(secrets.choice(alphabet) for i in range(length))
 
     return password
+
+@require_POST
+def save_answer(request):
+    """View to save answer to session"""  
+    answer = request.POST.get('answer')
+    print(answer)
+
+    return HttpResponse(status=200)
 
 # Create your views here.
 def quiz(request):

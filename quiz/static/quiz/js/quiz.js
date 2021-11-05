@@ -16,15 +16,23 @@ $(document).ready(function(){
       }
 
     correctAnswer = $(".correct_answer").text();
+
+    let csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+    let url = '/quiz/save_answer'; 
     
     $(".check").click(function(){
-        correctAnswer = getKeyByValue(Data, correctAnswer);
-        console.log(correctAnswer)
+              
+        correctAnswer = getKeyByValue(Data, correctAnswer);        
         givenAnswer = $('input[name="answer"]:checked').val().split(".");        
         if(correctAnswer==givenAnswer[0]){
             $(".result").html('Correct Answer!')
+            console.log(url)
+            $.post(url, {csrfmiddlewaretoken: csrfToken, "answer": "correct"}).done(function(){                                   
+            });            
         }else{
             $(".result").html(`Incorrect, answer is ${correctAnswer}`)
+            $.post(url, {csrfmiddlewaretoken: csrfToken, "answer": "incorrect"}).done(function(){                                   
+            });
         }
         $(".next").show();
         $(".check").hide();
