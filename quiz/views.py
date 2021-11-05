@@ -1,3 +1,4 @@
+from django.db.models.query_utils import Q
 from django.shortcuts import (
     render, redirect, reverse, get_object_or_404)
 from django.contrib import messages
@@ -81,7 +82,7 @@ def update_quiz(request, quiz_id):
     return render(request, 'quiz/update_quiz.html', context)
 
 def questionnaire(request, quiz_id, num=0):
-    """View to view Questionnaire"""    
+    """View to view Questionnaire"""
     quiz = get_object_or_404(Quiz, id=quiz_id)
     questions = Questions.objects.all().filter(quiz=quiz_id)
     question_id=[]
@@ -134,16 +135,21 @@ def delete_question(request, question_id):
 
 def update_question(request, question_id):
     """View to update quiz name"""
+    question_list=[]
     if not request.user.is_superuser:
         messages.error(request, 'Permision Denied!.')
         return redirect(reverse('home'))
     question = get_object_or_404(Questions, id=question_id)
+    all_questions = Questions.objects.all()
+    for questions in all_questions:
+        question_list.append(questions.id)
     if request.method == 'POST':
         form = add_questionForm(request.POST, request.FILES, instance=question)
         if form.is_valid():
             form.save()
             messages.success(request, 'Question updated!')
-            return redirect(reverse('quiz'))
+            return redirect(reverse(
+                'questionnaire', args=[question.quiz.id, question_list.index(question.id)]))
         messages.error(
             request, 'Question could not be updated. \
                 Try again.')

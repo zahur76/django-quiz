@@ -6,6 +6,15 @@ a {
     width: 25%;
 }
 
+label {
+    margin: 3px;
+}
+
+input[type="radio"]{
+    margin-bottom: 3px;
+    vertical-align: middle;
+}
+
 /* Media screen */
 @media screen and (max-width: 992px){
     .add-quiz-form {

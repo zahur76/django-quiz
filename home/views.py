@@ -1,5 +1,7 @@
+from django.db.models.query_utils import Q
 from django.shortcuts import get_object_or_404, render
 from django.contrib import messages
+from quiz.models import Quiz
 from staff.models import Staff
 
 # Create your views here.
@@ -13,9 +15,10 @@ def home(request):
             messages.error(
             request, 'Incorrect Employee Number!')
             return render(request, 'home/index.html')
-
+        quizzes = Quiz.objects.all()
         if staff:
             context = {
+                'quizzes': quizzes,
                 'staff': staff,
             }
             return render(request, 'home/index.html', context)

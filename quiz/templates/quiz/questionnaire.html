@@ -12,17 +12,16 @@
         <a href="{% url 'delete_question' question_id=question.id %}" class="m-2 btn btn-danger rounded-0 text-light">Delete</a>
         <a href="{% url 'update_question' question_id=question.id %}" class="btn btn-info rounded-0 text-light">Modify</a>
     {% endif %} 
-    <div class="row m-0 mt-3">        
+    <div class="row m-0 mt-5">        
         <div class="col-2 mb-2"></div>
         <div class="col-10 mb-3 h4">Q{{ next }}. {{ question.question }}</div>
         <div class="col-2 mb-2"></div>
-        <div class="col-10 mb-2 h4">A. {{ question.first_answer }}</div>
-        <div class="col-2 mb-2"></div>
-        <div class="col-10 mb-2 h4">B. {{ question.second_answer }}</div>
-        <div class="col-2 mb-2"></div>
-        <div class="col-10 mb-2 h4">C. {{ question.third_answer  }}</div>
-        <div class="col-2 mb-2"></div>
-        <div class="col-10 mb-2 h4">D. {{ question.fourth_answer }}</div>
+        <div class="radio h4 col-10">            
+            <label><input type="radio" name="answer"> A. {{ question.first_answer }}</label><br>
+            <label><input type="radio" name="answer"> B. {{ question.second_answer }}</label><br>
+            <label><input type="radio" name="answer"> C. {{ question.third_answer }}</label><br>
+            <label><input type="radio" name="answer"> D. {{ question.fourth_answer }}</label>
+        </div>        
     </div>
     <div class="row m-0 mt-3">
         <div class="col-2"></div>
