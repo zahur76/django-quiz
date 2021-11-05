@@ -4,6 +4,7 @@ $(document).ready(function(){
 
     $(".next").hide();
     $(".correct_answer").hide();
+    $('.path').hide()
 
     // Disable check button if no selection
     $(".check").attr("disabled", "disabled");
@@ -13,26 +14,43 @@ $(document).ready(function(){
 
     function getKeyByValue(object, value) {
         return Object.keys(object).find(key => object[key] === value);
-      }
-
+    }
+    console.log(Data['length'])
     correctAnswer = $(".correct_answer").text();
 
     let csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-    let url = '/quiz/save_answer';
-    
-    console.log(Data)
-    
+    let url = '/quiz/save_answer';   
+    let path = $('.path').text()
+    let endDigit = parseInt(path.slice(-1)) + 1
+    console.log(endDigit)
+    let new_path = path.slice(0,-1) + endDigit.toString()
+    console.log(new_path)
     $(".check").click(function(){              
         correctAnswer = getKeyByValue(Data, correctAnswer);        
         givenAnswer = $('input[name="answer"]:checked').val().split(".");        
         if(correctAnswer==givenAnswer[0]){
             $(".result").html('Correct Answer!')
             console.log(url)
-            $.post(url, {csrfmiddlewaretoken: csrfToken, "answer": "correct", "id": Data.id}).done(function(){                                   
+            $.post(url, {csrfmiddlewaretoken: csrfToken, "answer": "correct", "id": Data.id}).done(function(response){                                   
+                console.log(response)
+                if(response=='False' & endDigit<Data['length']){
+                    $(".result").html('Question already answered!')                  
+                    setInterval(() => {
+                        window.location.replace(new_path);
+                    }, 2000);   
+                }                
             });            
         }else{
             $(".result").html(`Incorrect, answer is ${correctAnswer}`)
-            $.post(url, {csrfmiddlewaretoken: csrfToken, "answer": "incorrect", "id": Data.id}).done(function(){                                   
+            $.post(url, {csrfmiddlewaretoken: csrfToken, "answer": "incorrect", "id": Data.id}).done(function(response){                                   
+                console.log(response)
+                if(response=='False' & endDigit<Data['length']){
+                    $(".result").html('Question already answered!')
+                    setInterval(() => {
+                        window.location.replace(new_path);
+                    }, 2000);                   
+                    
+                }  
             });
         }
         $(".next").show();
