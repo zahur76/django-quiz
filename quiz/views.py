@@ -63,8 +63,8 @@ def update_quiz(request, quiz_id):
     if not request.user.is_superuser:
         messages.error(request, 'Permision Denied!.')
         return redirect(reverse('home'))
-    quiz = get_object_or_404(Quiz, id=quiz_id)          
-    if request.method == 'POST':        
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    if request.method == 'POST':
         form = add_quizForm(request.POST, request.FILES, instance=quiz)
         if form.is_valid():
             form.save()
@@ -160,3 +160,25 @@ def update_question(request, question_id):
         'form': form,
         }
     return render(request, 'quiz/update_question.html', context)
+
+# def check_answer(request, question_id):
+#     """View to check answer"""
+#     if request.method == 'POST':
+#         question_list=[]
+#         answer = request.POST['answer']
+#         question = get_object_or_404(Questions, id=question_id)
+#         if question.answer == answer:
+#             print('answer correct')
+#             result = 'correct'
+#             all_questions = Questions.objects.all()
+#             for questions in all_questions:
+#                 question_list.append(questions.id)
+#             return redirect(reverse(
+#                         'questionnaire', args=[question.quiz.id, question_list.index(question.id)]))
+#         print('answer incorrect')
+#         all_questions = Questions.objects.all()
+#         for questions in all_questions:
+#             question_list.append(questions.id)
+#         return redirect(reverse(
+#                     'questionnaire', args=[question.quiz.id, question_list.index(question.id)]))
+        

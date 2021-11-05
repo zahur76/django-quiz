@@ -10,4 +10,5 @@ urlpatterns = [
     path('add_question/<int:quiz_id>', views.add_question, name='add_question'),
     path('delete_question/<int:question_id>', views.delete_question, name='delete_question'),
     path('update_question/<int:question_id>', views.update_question, name='update_question'),
+    # path('check_answer/<int:question_id>', views.check_answer, name='check_answer'),
 ]
