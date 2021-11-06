@@ -7,6 +7,7 @@ from typing_extensions import final
 from django.shortcuts import (
     render, redirect, reverse, get_object_or_404, HttpResponse)
 from django.contrib import messages
+from django.core import signing
 from .forms import add_quizForm, add_questionForm
 from .models import Quiz, Questions, Results
 from staff.models import Staff
@@ -17,6 +18,14 @@ def randon_word(length):
     password = ''.join(secrets.choice(alphabet) for i in range(length))
 
     return password
+
+def random_number_encode(num):
+    new_num = (num+3)*10233553+11
+    return new_num
+
+def random_number_decode(num):
+    new_num = (num-11)/10233553-3
+    return int(new_num)
 
 def save_answer(request):
     """View to save answer to session"""
@@ -122,9 +131,18 @@ def update_quiz(request, quiz_id):
 
 def questionnaire(request, quiz_id, num=0):
     """View to view Questionnaire"""
+    if num==0:
+        num=0
+        quiz_id=quiz_id
+    else:
+        quiz_id = random_number_decode(quiz_id)
+        num = random_number_decode(num)
     question_id=[]
     request.session.modified = True
-    questions = Questions.objects.all().filter(quiz=quiz_id)
+    if num==0:
+        questions = Questions.objects.all().filter(quiz=quiz_id)
+    else:
+        questions = Questions.objects.all().filter(quiz=quiz_id)
     for question in questions:
         question_id.append(question.id)
     final = len(question_id)
@@ -134,7 +152,10 @@ def questionnaire(request, quiz_id, num=0):
         print(request.session['answer'])
         request.session['quiz']= {'quiz_id': quiz_id}
     quiz = get_object_or_404(Quiz, id=quiz_id)
-    actual_question = get_object_or_404(Questions, id=question_id[num])
+    if num==0:
+        actual_question = get_object_or_404(Questions, id=question_id[num])
+    else:
+        actual_question = get_object_or_404(Questions, id=question_id[num])
     crypt= {
         "A": randon_word(6),
         "B": randon_word(6),
@@ -144,11 +165,16 @@ def questionnaire(request, quiz_id, num=0):
         'length': final,
         }
     answer = crypt[actual_question.answer]
+    # encrypt number
+    quiz_url = random_number_encode(quiz_id)
+
     context = {
+        'quiz_url': quiz_url,
         'crypt': json.dumps(crypt),
         'answer': answer,
         'final': final,
         'next': num+1,
+        'next_url': random_number_encode(num+1),
         'quiz': quiz,
         'question': actual_question,
     }

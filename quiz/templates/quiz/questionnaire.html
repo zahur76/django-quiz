@@ -17,7 +17,7 @@
         <div class="col-10 mb-3 h4">Q{{ next }}. {{ question.question }}</div>
         <div class="col-2 mb-2"></div>
         <div class="radio h4 col-10"> 
-            <form id="answer" action="{% url 'questionnaire' quiz.id next %}" method="POST" class="answer">
+            <form id="answer" action="{% url 'questionnaire' quiz_url next_url %}" method="POST" class="answer">
                 {% csrf_token %}
                 <label><input type="radio" name="answer" value="A.{{ question.first_answer }}"> A. {{ question.first_answer }}</label><br>
                 <label><input type="radio" name="answer" value="B.{{ question.second_answer }}"> B. {{ question.second_answer }}</label><br>
