@@ -1,6 +1,7 @@
 import secrets
 import string
 import json
+import math
 from django.shortcuts import (
     render, redirect, reverse, get_object_or_404, HttpResponse)
 from django.contrib import messages
@@ -214,14 +215,21 @@ def update_question(request, question_id):
 
 def results(request):
     """View to show resulst"""
+    correct_answers = 0
     if 'answer' in request.session:
-        print(request.session['answer'])
+        answers  = request.session['answer']        
+        for key, value in answers.items():
+            if value == 1:
+                correct_answers+=1
+        final_results = math.floor(correct_answers/len(answers) * 100)
         del request.session['answer']
     if 'employee' in request.session:
         employee = request.session['employee']
         staff = get_object_or_404(Staff, employee_number=employee['employee'])
         del request.session['employee']
+    
     context = {
+        'results': final_results,
         'staff': staff,
     }
     return render(request, 'quiz/results.html', context)
