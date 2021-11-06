@@ -26,7 +26,7 @@ def save_answer(request):
         return HttpResponse(status=200)
     else:
         if result=='correct':
-            if id in request.session['answer']:
+            if answer_id in request.session['answer']:
                 print('cheater')
                 response = False
                 return HttpResponse(response)
@@ -34,7 +34,7 @@ def save_answer(request):
             print(request.session['answer'])
             return HttpResponse(status=200)
         else:
-            if id in request.session['answer']:
+            if answer_id in request.session['answer']:
                 print('cheater')
                 response = False
                 return HttpResponse(response)
@@ -130,6 +130,7 @@ def questionnaire(request, quiz_id, num=0):
         print('new session')
         request.session['answer']= {}
         print(request.session['answer'])
+        request.session['quiz']= {'quiz_id': quiz_id}
     quiz = get_object_or_404(Quiz, id=quiz_id)
     actual_question = get_object_or_404(Questions, id=question_id[num])
     crypt= {
@@ -217,7 +218,7 @@ def results(request):
     """View to show resulst"""
     correct_answers = 0
     if 'answer' in request.session:
-        answers  = request.session['answer']        
+        answers  = request.session['answer']
         for key, value in answers.items():
             if value == 1:
                 correct_answers+=1
@@ -227,7 +228,11 @@ def results(request):
         employee = request.session['employee']
         staff = get_object_or_404(Staff, employee_number=employee['employee'])
         del request.session['employee']
-    
+    if 'quiz' in request.session:
+        quiz = request.session['quiz']
+        actual_quiz = get_object_or_404(Quiz, id=quiz['quiz_id'])
+        print(actual_quiz)
+        del request.session['quiz']
     context = {
         'results': final_results,
         'staff': staff,

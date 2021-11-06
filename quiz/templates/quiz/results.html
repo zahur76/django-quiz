@@ -9,11 +9,8 @@
     <div class="text-center h1">{{ staff.first_name|capfirst }} Results</div>      
     <a href="{% url 'home' %}" class="btn btn-dark text-light rounded-0 m-2">Home</a> 
     
-    {% if results < 75 %}
-        <div class="text-center h1">Fail: {{ results }}%</div>
-    {% else %}
-        <div class="text-center h1 border-bottom border-dark">Pass: {{ results }}%</div>
-    {% endif %}
+    <div class="text-center h1 border-bottom border-dark">Result: {{ results }}%</div>
+    
     <div class="row m-0 h4 mt-3">
         <div class="d-none d-md-block col-md-4 p-2"></div>
         <div class="col-6 col-md-3 p-2 results">Name</div>
@@ -25,7 +22,7 @@
         <div class="col-6 col-md-3 p-2">Date</div>
         <div class="col-5 p-2">22/05/2020</div>
         <div class="d-none d-md-block col-md-4 p-2"></div>
-        <div class="col-6 col-md-3 p-2">Results</div>
+        <div class="col-6 col-md-3 p-2">Result</div>
         <div class="col-5 p-2">
             {% if results < 75 %}
                 <div>FAIL</div>
