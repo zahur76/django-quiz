@@ -25,6 +25,7 @@ class ResultsAdmin(admin.ModelAdmin):
     list_display = (
         'staff',
         'quiz_name',
+        'created_at'
     )
     # Ordering in admin
     ordering = ('id',)

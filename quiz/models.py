@@ -38,9 +38,10 @@ class Results(models.Model):
             'staff.Staff', null=False, blank=False, on_delete=models.CASCADE,
             related_name='results')
     quiz_name = models.CharField(max_length=254)
-    results = models.CharField(max_length=254, default="0")
+    results = models.CharField(max_length=254)
     attempts = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+    pass_fail = models.CharField(max_length=254)
 
     def __str__(self):
         return self.staff.first_name

@@ -3,11 +3,12 @@ import string
 import json
 import math
 import time
+from typing_extensions import final
 from django.shortcuts import (
     render, redirect, reverse, get_object_or_404, HttpResponse)
 from django.contrib import messages
 from .forms import add_quizForm, add_questionForm
-from .models import Quiz, Questions
+from .models import Quiz, Questions, Results
 from staff.models import Staff
 
 def randon_word(length):
@@ -216,7 +217,7 @@ def update_question(request, question_id):
     return render(request, 'quiz/update_question.html', context)
 
 def results(request):
-    """View to show resulst"""
+    """View to show results and store to database"""
     correct_answers = 0
     if 'answer' in request.session:
         answers  = request.session['answer']
@@ -238,6 +239,36 @@ def results(request):
         print(actual_quiz)
         del request.session['quiz']
     date = time.strftime("%Y"+"/"+"%m"+"/"+"%d")
+
+    # save result to results model
+    if Results.objects.all().filter(staff=staff.id, quiz_name=actual_quiz.quiz_name):
+        quiz_attempts = len(Results.objects.all().filter(
+            staff=staff.id, quiz_name=actual_quiz.quiz_name))
+        quiz_attempts += 1
+    else:
+        quiz_attempts = 1
+
+    if request.user.is_superuser:
+        context = {
+            'date': date,
+            'results': final_results,
+            'staff': staff,
+        }
+        return render(request, 'quiz/results.html', context)
+
+    if final_results >= 75:
+        pass_fail = "Pass"
+    else:
+        pass_fail = "Fail"
+
+    Results.objects.create(
+        staff = staff,
+        quiz_name = actual_quiz.quiz_name,
+        results = final_results,
+        attempts = quiz_attempts,
+        pass_fail = pass_fail,
+    )
+
     context = {
         'date': date,
         'results': final_results,
