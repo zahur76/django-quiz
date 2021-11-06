@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Quiz, Questions
+from .models import Quiz, Questions, Results
 # Register your models here.
 
 
@@ -20,5 +20,16 @@ class QuestionsAdmin(admin.ModelAdmin):
     # Ordering in admin
     ordering = ('id',)
 
+class ResultsAdmin(admin.ModelAdmin):
+    # Admin display
+    list_display = (
+        'staff',
+        'quiz_name',
+    )
+    # Ordering in admin
+    ordering = ('id',)
+
 admin.site.register(Quiz, QuizAdmin)
 admin.site.register(Questions, QuestionsAdmin)
+admin.site.register(Results, ResultsAdmin)
+
