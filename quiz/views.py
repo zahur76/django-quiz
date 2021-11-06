@@ -1,13 +1,12 @@
-from django.db.models.query_utils import Q
-from django.views.decorators.http import require_POST
+import secrets
+import string
+import json
 from django.shortcuts import (
     render, redirect, reverse, get_object_or_404, HttpResponse)
 from django.contrib import messages
 from .forms import add_quizForm, add_questionForm
 from .models import Quiz, Questions
-import secrets
-import string
-import json
+from staff.models import Staff
 
 def randon_word(length):
     """Generate random word"""
@@ -20,7 +19,7 @@ def save_answer(request):
     """View to save answer to session"""
     request.session.modified = True
     result = request.POST.get('answer')
-    id = request.POST.get('id')
+    answer_id = request.POST.get('id')
 
     if request.user.is_superuser:
         return HttpResponse(status=200)
@@ -30,7 +29,7 @@ def save_answer(request):
                 print('cheater')
                 response = False
                 return HttpResponse(response)
-            request.session['answer'][id] = 1
+            request.session['answer'][answer_id] = 1
             print(request.session['answer'])
             return HttpResponse(status=200)
         else:
@@ -38,7 +37,7 @@ def save_answer(request):
                 print('cheater')
                 response = False
                 return HttpResponse(response)
-            request.session['answer'][id] = 0
+            request.session['answer'][answer_id] = 0
             print(request.session['answer'])
             return HttpResponse(status=200)
 
@@ -120,19 +119,18 @@ def update_quiz(request, quiz_id):
 
 def questionnaire(request, quiz_id, num=0):
     """View to view Questionnaire"""
-    questions = Questions.objects.all().filter(quiz=quiz_id)
     question_id=[]
+    request.session.modified = True
+    questions = Questions.objects.all().filter(quiz=quiz_id)
     for question in questions:
         question_id.append(question.id)
+    final = len(question_id)
     if num==0 and 'answer' not in request.session:
         print('new session')
         request.session['answer']= {}
         print(request.session['answer'])
     quiz = get_object_or_404(Quiz, id=quiz_id)
     actual_question = get_object_or_404(Questions, id=question_id[num])
-    final = len(question_id)
-    num_list = list(range(0,final))
-    print(num_list)
     crypt= {
         "A": randon_word(6),
         "B": randon_word(6),
@@ -180,7 +178,7 @@ def delete_question(request, question_id):
     """View to delete question"""
     if not request.user.is_superuser:
         messages.error(request, 'Permision Denied!.')
-        return redirect(reverse('home'))    
+        return redirect(reverse('home'))
     question = get_object_or_404(Questions, id=question_id)
     question.delete()
     messages.success(request, 'Questions deleted!')
@@ -218,6 +216,12 @@ def results(request):
     """View to show resulst"""
     if 'answer' in request.session:
         print(request.session['answer'])
-        del request.session['answer']    
-    
-    return render(request, 'home/index.html')
+        del request.session['answer']
+    if 'employee' in request.session:
+        employee = request.session['employee']
+        staff = get_object_or_404(Staff, employee_number=employee['employee'])
+        del request.session['employee']
+    context = {
+        'staff': staff,
+    }
+    return render(request, 'quiz/results.html', context)

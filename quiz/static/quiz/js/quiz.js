@@ -14,17 +14,15 @@ $(document).ready(function(){
 
     function getKeyByValue(object, value) {
         return Object.keys(object).find(key => object[key] === value);
-    }
-    console.log(Data['length'])
+    }    
     correctAnswer = $(".correct_answer").text();
 
     let csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
     let url = '/quiz/save_answer';   
     let path = $('.path').text()
-    let endDigit = parseInt(path.slice(-1)) + 1
-    console.log(endDigit)
+    let endDigit = parseInt(path.slice(-1)) + 1    
     let new_path = path.slice(0,-1) + endDigit.toString()
-    console.log(new_path)
+    
     $(".check").click(function(){              
         correctAnswer = getKeyByValue(Data, correctAnswer);        
         givenAnswer = $('input[name="answer"]:checked').val().split(".");        
@@ -49,7 +47,6 @@ $(document).ready(function(){
                     setInterval(() => {
                         window.location.replace(new_path);
                     }, 2000);                   
-                    
                 }  
             });
         }

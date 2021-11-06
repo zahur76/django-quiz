@@ -17,6 +17,7 @@ def home(request):
             return render(request, 'home/index.html')
         quizzes = Quiz.objects.all()
         if staff:
+            request.session['employee']= {'employee': staff.employee_number}
             context = {
                 'quizzes': quizzes,
                 'staff': staff,
