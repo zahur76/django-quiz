@@ -2,6 +2,7 @@ import secrets
 import string
 import json
 import math
+import time
 from django.shortcuts import (
     render, redirect, reverse, get_object_or_404, HttpResponse)
 from django.contrib import messages
@@ -222,7 +223,10 @@ def results(request):
         for key, value in answers.items():
             if value == 1:
                 correct_answers+=1
-        final_results = math.floor(correct_answers/len(answers) * 100)
+        if request.user.is_superuser:
+            final_results = 999
+        else:   
+            final_results = math.floor(correct_answers/len(answers) * 100)
         del request.session['answer']
     if 'employee' in request.session:
         employee = request.session['employee']
@@ -233,7 +237,9 @@ def results(request):
         actual_quiz = get_object_or_404(Quiz, id=quiz['quiz_id'])
         print(actual_quiz)
         del request.session['quiz']
+    date = time.strftime("%Y"+"/"+"%m"+"/"+"%d")
     context = {
+        'date': date,
         'results': final_results,
         'staff': staff,
     }
