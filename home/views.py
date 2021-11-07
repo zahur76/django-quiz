@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib import messages
 from quiz.models import Quiz
 from staff.models import Staff
+from quiz.views import random_number_encode
 
 # Create your views here.
 def home(request):
@@ -16,10 +17,17 @@ def home(request):
             request, 'Incorrect Employee Number!')
             return render(request, 'home/index.html')
         quizzes = Quiz.objects.all()
+        encode_quiz= []
+        tempo_dict = {}
         if staff:
             request.session['employee']= {'employee': staff.employee_number}
+            for quiz in quizzes:
+                tempo_dict['id']=(random_number_encode(quiz.id, 1))
+                tempo_dict['quiz_name'] = quiz.quiz_name
+                encode_quiz.append(tempo_dict)
+                tempo_dict = {}
             context = {
-                'quizzes': quizzes,
+                'quizzes': encode_quiz,
                 'staff': staff,
             }
             return render(request, 'home/index.html', context)

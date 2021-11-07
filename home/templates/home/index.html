@@ -21,8 +21,8 @@
         <div class="col-12 text-center mt-3"><b>Employee Number:</b> {{ staff.employee_number }}</div>
         <div class="col-12 text-center"><b>Name:</b> {{ staff.first_name }} {{ staff.last_name }}</div>
         <div class="col-12 text-center mb-5"><b>Email:</b> {{ staff.email_address }}</div>
-        {% for quiz in quizzes %}
-            <a href="{% url 'questionnaire' quiz_id=quiz.id num=0 %}" class="mb-2 col-6 offset-3 btn btn-success rounded-0 text-light">Start {{ quiz.quiz_name }}</a>
+        {% for quiz in quizzes %}            
+            <a href="{% url 'questionnaire' quiz_id=quiz.id num=12345 %}" class="mb-2 col-6 offset-3 btn btn-success rounded-0 text-light">Start {{ quiz.quiz_name }}</a>
         {% endfor %}
     {% endif %}          
 {% endblock %}

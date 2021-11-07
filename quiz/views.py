@@ -19,12 +19,14 @@ def randon_word(length):
 
     return password
 
-def random_number_encode(num):
-    new_num = (num+3)*10233553+11
+def random_number_encode(num , num_two):
+    """encode random number"""
+    new_num = (num_two+num+3)*10233553+432*num_two
     return new_num
 
-def random_number_decode(num):
-    new_num = (num-11)/10233553-3
+def random_number_decode(num, num_two):
+    """decode random number"""
+    new_num = (num-432*num_two)/10233553-(3+num_two)
     return int(new_num)
 
 def save_answer(request):
@@ -129,20 +131,18 @@ def update_quiz(request, quiz_id):
         }
     return render(request, 'quiz/update_quiz.html', context)
 
-def questionnaire(request, quiz_id, num=0):
+def questionnaire(request, quiz_id, num=12345):
     """View to view Questionnaire"""
-    if num==0:
+    if num==12345:
         num=0
-        quiz_id=quiz_id
+        quiz_id=random_number_decode(quiz_id, 1)
     else:
-        quiz_id = random_number_decode(quiz_id)
-        num = random_number_decode(num)
+        num = random_number_decode(num, 1)
+        quiz_id = random_number_decode(quiz_id, num-1)
+
     question_id=[]
     request.session.modified = True
-    if num==0:
-        questions = Questions.objects.all().filter(quiz=quiz_id)
-    else:
-        questions = Questions.objects.all().filter(quiz=quiz_id)
+    questions = Questions.objects.all().filter(quiz=quiz_id)
     for question in questions:
         question_id.append(question.id)
     final = len(question_id)
@@ -166,7 +166,7 @@ def questionnaire(request, quiz_id, num=0):
         }
     answer = crypt[actual_question.answer]
     # encrypt number
-    quiz_url = random_number_encode(quiz_id)
+    quiz_url = random_number_encode(quiz_id, num)
 
     context = {
         'quiz_url': quiz_url,
@@ -174,7 +174,7 @@ def questionnaire(request, quiz_id, num=0):
         'answer': answer,
         'final': final,
         'next': num+1,
-        'next_url': random_number_encode(num+1),
+        'next_url': random_number_encode(num+1, 1),
         'quiz': quiz,
         'question': actual_question,
     }
