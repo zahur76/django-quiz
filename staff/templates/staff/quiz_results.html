@@ -9,16 +9,45 @@
 {% block content %}
     <div class="text-center h1 mb-3">Quiz Results</div>
     <a href="{% url 'staff' %}" class="m-2 btn btn-dark rounded-0 text-light">Back</a>
+    <a href="#" class="m-2 btn btn-dark rounded-0 text-light show-more">+More</a>
+    <a href="#" class="m-2 btn btn-dark rounded-0 text-light hide">Hide</a>
+    <div class="row m-0 staff-text border-bottom border-dark">
+        <div class="col-3">Name</div>
+        <div class="col-3 text-center">Quiz Name</div>        
+        <div class="col-2 text-center">Result</div>
+        <div class="col-4 text-center">Completed</div>                
+    </div>
     <div class="row m-0 staff-text">
         {% for result in results %}
-            <div class="col-3">{{ result.staff.first_name }} {{ result.staff.last_name }}</div>
-            <div class="col-2">{{ result.results }}</div>
-            <div class="col-2">{{ result.attempts }}</div>
-            <div class="col-4">{{ result.created_at }}</div>
-            <div class="col-1">{{ result.pass_fail }}</div>
+            {% if forloop.counter|divisibleby:2 %}           
+                <div class="col-3">{{ result.staff.first_name }} {{ result.staff.last_name }}</div>
+                <div class="col-3 text-center">{{ result.quiz_name }}</div>            
+                <div class="col-2 text-center">{{ result.pass_fail }}</div>
+                <div class="col-4 text-center">{{ result.created_at }}</div>                
+                <div class="col-3 results-additional-info">Employee No</div>
+                <div class="col-3 text-center results-additional-info">Attempt</div>
+                <div class="col-2 text-center results-additional-info">Points</div>
+                <div class="col-4 results-additional-info"></div>                           
+                <div class="col-3 results-additional-info">{{ result.staff.employee_number }}</div>
+                <div class="col-3 text-center results-additional-info">{{ result.attempts }}</div>            
+                <div class="col-2 text-center results-additional-info">{{ result.results }}</div> 
+                <a href="{% url 'delete_result' result_id = result.id %}" class="col-4 results-additional-info text-center text-danger">DEL</a>                 
+            {% else %}
+                <div class="col-3 bg-secondary">{{ result.staff.first_name }} {{ result.staff.last_name }}</div>
+                <div class="col-3 text-center bg-secondary">{{ result.quiz_name }}</div>            
+                <div class="col-2 text-center bg-secondary">{{ result.pass_fail }}</div>
+                <div class="col-4 text-center bg-secondary">{{ result.created_at }}</div>                            
+                <div class="col-3 bg-secondary results-additional-info">Employee No</div>
+                <div class="col-3 text-center bg-secondary results-additional-info">Attempt</div>
+                <div class="col-2 text-center bg-secondary results-additional-info">Points</div>
+                <div class="col-4 bg-secondary results-additional-info"></div>                          
+                <div class="col-3 bg-secondary results-additional-info">{{ result.staff.employee_number }}</div>
+                <div class="col-3 text-center bg-secondary results-additional-info">{{ result.attempts }}</div>            
+                <div class="col-2 text-center bg-secondary results-additional-info">{{ result.results }}</div> 
+                <a href="{% url 'delete_result' result_id = result.id %}" class="col-4 bg-secondary results-additional-info text-center text-danger">DEL</a>                
+            {% endif %}                  
         {% endfor %}
     </div>
-    
 {% endblock %}
 
 {% block extra_js %}              
