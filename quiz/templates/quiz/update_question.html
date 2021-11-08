@@ -12,7 +12,7 @@
     <div class="mx-auto mb-2 add-quiz-form">
         <form id="add-quiz-form" action="{% url 'update_question' question_id=question.id %}" method="POST" enctype="multipart/form-data" class="addQuiz">
             {% csrf_token %}
-            {{ form|crispy }} 
+            {{ form|crispy }}
             <button class="btn btn-dark text-light mt-2 rounded-0" type="submit" form="add-quiz-form">Update</button>
         </form>
     </div>                

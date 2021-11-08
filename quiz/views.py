@@ -240,8 +240,7 @@ def update_question(request, question_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Question updated!')
-            return redirect(reverse(
-                'questionnaire', args=[question.quiz.id, question_list.index(question.id)]))
+            return redirect(reverse('quiz'))
         messages.error(
             request, 'Question could not be updated. \
                 Try again.')
