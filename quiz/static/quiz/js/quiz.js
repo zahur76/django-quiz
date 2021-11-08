@@ -5,6 +5,7 @@ $(document).ready(function(){
     $(".next").hide();
     $(".correct_answer").hide();
     $('.path').hide()
+    $('.path-two').hide()
 
     // Disable check button if no selection
     $(".check").attr("disabled", "disabled");
@@ -19,11 +20,11 @@ $(document).ready(function(){
 
     let csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
     let url = '/quiz/save_answer';   
-    let path = $('.path').text()
-    let endDigit = parseInt(path.slice(-1)) + 1    
-    let new_path = path.slice(0,-1) + endDigit.toString()
-    
-    $(".check").click(function(){              
+    let path = $('.path').html();
+    let pathTwo = $('.path-two').html();
+
+    let endDigit = parseInt(pathTwo.slice(-1)) + 1  
+    $(".check").click(function(){                                
         correctAnswer = getKeyByValue(Data, correctAnswer);        
         givenAnswer = $('input[name="answer"]:checked').val().split(".");        
         if(correctAnswer==givenAnswer[0]){
@@ -34,7 +35,7 @@ $(document).ready(function(){
                 if(response=='False' & endDigit<Data['length']){
                     $(".result").html('Question already answered!')                  
                     setInterval(() => {
-                        window.location.replace(new_path);
+                        window.location.replace(path);
                     }, 2000);   
                 }                
             });            
@@ -45,7 +46,7 @@ $(document).ready(function(){
                 if(response=='False' & endDigit<Data['length']){
                     $(".result").html('Question already answered!')
                     setInterval(() => {
-                        window.location.replace(new_path);
+                        window.location.replace(path);
                     }, 2000);                   
                 }  
             });

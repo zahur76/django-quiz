@@ -62,8 +62,15 @@ def quiz(request):
         messages.error(request, 'Permision Denied!.')
         return redirect(reverse('home'))
     quizzes = Quiz.objects.all()
+    encode_quiz= []
+    tempo_dict = {}
+    for quiz in quizzes:
+        tempo_dict['id']=(random_number_encode(quiz.id, 1))
+        tempo_dict['quiz_name'] = quiz.quiz_name
+        encode_quiz.append(tempo_dict)
+        tempo_dict = {}
     context = {
-        'quizzes': quizzes,
+        'quizzes': encode_quiz,
     }
 
     return render(request, 'quiz/quiz.html', context)
@@ -169,6 +176,8 @@ def questionnaire(request, quiz_id, num=12345):
     quiz_url = random_number_encode(quiz_id, num)
 
     context = {
+        'num': num,
+        'quiz_id': quiz_id,
         'quiz_url': quiz_url,
         'crypt': json.dumps(crypt),
         'answer': answer,
@@ -252,7 +261,7 @@ def results(request):
                 correct_answers+=1
         if request.user.is_superuser:
             final_results = 999
-        else:   
+        else:
             final_results = math.floor(correct_answers/len(answers) * 100)
         del request.session['answer']
     if 'employee' in request.session:
@@ -267,18 +276,18 @@ def results(request):
     date = time.strftime("%Y"+"/"+"%m"+"/"+"%d")
 
     # save result to results model
-    if Results.objects.all().filter(staff=staff.id, quiz_name=actual_quiz.quiz_name):
-        quiz_attempts = len(Results.objects.all().filter(
-            staff=staff.id, quiz_name=actual_quiz.quiz_name))
-        quiz_attempts += 1
-    else:
-        quiz_attempts = 1
+    if not request.user.is_superuser:
+        if Results.objects.all().filter(staff=staff.id, quiz_name=actual_quiz.quiz_name):
+            quiz_attempts = len(Results.objects.all().filter(
+                staff=staff.id, quiz_name=actual_quiz.quiz_name))
+            quiz_attempts += 1
+        else:
+            quiz_attempts = 1
 
     if request.user.is_superuser:
         context = {
             'date': date,
             'results': final_results,
-            'staff': staff,
         }
         return render(request, 'quiz/results.html', context)
 

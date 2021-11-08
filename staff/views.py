@@ -68,3 +68,10 @@ def delete_staff(request, staff_id):
     staff.delete()
     messages.success(request, 'Staff record deleted!')
     return redirect(reverse('staff'))
+
+def quiz_results(request):
+    all_results = Staff.objects.all()
+    context = {
+        'results': all_results,
+    }
+    return render(request, 'staff/quiz_results.html')

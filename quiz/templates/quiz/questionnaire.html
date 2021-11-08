@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="h1 text-center mt-2">{{ quiz.quiz_name }}</div>    
+    <div class="h1 text-center mt-2">{{ quiz.quiz_name }}</div>     
     {% if request.user.is_superuser %}
         <a href="{% url 'quiz' %}" class="m-2 btn btn-dark rounded-0 text-light">Back</a>
         <a href="{% url 'delete_question' question_id=question.id %}" class="m-2 btn btn-danger rounded-0 text-light">Delete</a>
@@ -26,7 +26,8 @@
             </form>
         </div>
         <div class="correct_answer">{{ answer }}</div>
-        <div class="path">{{ request.get_full_path }}</div>
+        <div class="path">/quiz/questionnaire/{{ quiz_url }}/{{ next_url }}</div>
+        <div class="path-two">/quiz/questionnaire/{{ quiz_id }}/{{ num }}</div>
         <div class="col-12 result text-center text-success"></div>      
     </div>
     <div class="row m-0 mt-3">
