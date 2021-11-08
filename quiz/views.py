@@ -65,10 +65,12 @@ def quiz(request):
     encode_quiz= []
     tempo_dict = {}
     for quiz in quizzes:
+        tempo_dict['decrypt_id'] = quiz.id
         tempo_dict['id']=(random_number_encode(quiz.id, 1))
         tempo_dict['quiz_name'] = quiz.quiz_name
         encode_quiz.append(tempo_dict)
         tempo_dict = {}
+    print(encode_quiz)
     context = {
         'quizzes': encode_quiz,
     }
