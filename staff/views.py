@@ -72,7 +72,31 @@ def delete_staff(request, staff_id):
 
 def quiz_results(request):
     all_results = Results.objects.all()
+    if 'q' in request.GET:
+        query = request.GET['q']
+        if not query:
+            context = {
+            'results': all_results,
+            }
+            return render(request, 'staff/quiz_results.html', context)
+        queries = Q(staff__employee_number__icontains=query) | Q(
+            staff__first_name__icontains=query)| Q(quiz_name__icontains=query)
+        results = all_results.filter(queries)
+        context = {
+            'results': results,
+            }
+        return render(request, 'staff/quiz_results.html', context)
     context = {
-        'results': all_results,
+    'results': all_results,
     }
     return render(request, 'staff/quiz_results.html', context)
+
+def delete_result(request, result_id):
+    """ A view to update staff details"""
+    if not request.user.is_superuser:
+        messages.error(request, 'Access Denied!')
+        return redirect(reverse('home'))
+    result = get_object_or_404(Results, id=result_id)
+    result.delete()
+    messages.success(request, 'Result record deleted!')
+    return redirect(reverse('quiz_results'))

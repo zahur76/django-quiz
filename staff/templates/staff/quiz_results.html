@@ -11,6 +11,18 @@
     <a href="{% url 'staff' %}" class="m-2 btn btn-dark rounded-0 text-light">Back</a>
     <a href="#" class="m-2 btn btn-dark rounded-0 text-light show-more">+More</a>
     <a href="#" class="m-2 btn btn-dark rounded-0 text-light hide">Hide</a>
+    <!-- Search Bar -->
+    <div class="row m-0 border-top d-flex justify-content-left">
+        <div class="col-10 col-md-4 col-lg-3 mt-2">
+            <form action="{% url 'quiz_results' %}" method="GET" id="characterForm">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="search" class="form-control custom-select rounded-0 border-2 border-dark" name="q" placeholder="Search Staff">
+                    <button class="btn btn-outline-dark bg-dark text-light rounded-0 input-group-append ml-auto search-button" type="submit"><div class="text">Search</div></button>
+                </div>                
+            </form> 
+        </div>      
+    </div>
     <div class="row m-0 staff-text border-bottom border-dark">
         <div class="col-3">Name</div>
         <div class="col-3 text-center">Quiz Name</div>        
@@ -31,7 +43,7 @@
                 <div class="col-3 results-additional-info">{{ result.staff.employee_number }}</div>
                 <div class="col-3 text-center results-additional-info">{{ result.attempts }}</div>            
                 <div class="col-2 text-center results-additional-info">{{ result.results }}</div> 
-                <a href="{% url 'delete_result' result_id = result.id %}" class="col-4 results-additional-info text-center text-danger">DEL</a>                 
+                <a href="{% url 'delete_result' result_id=result.id %}" class="col-4 results-additional-info text-center text-danger">DEL</a>                 
             {% else %}
                 <div class="col-3 bg-secondary">{{ result.staff.first_name }} {{ result.staff.last_name }}</div>
                 <div class="col-3 text-center bg-secondary">{{ result.quiz_name }}</div>            
@@ -44,7 +56,7 @@
                 <div class="col-3 bg-secondary results-additional-info">{{ result.staff.employee_number }}</div>
                 <div class="col-3 text-center bg-secondary results-additional-info">{{ result.attempts }}</div>            
                 <div class="col-2 text-center bg-secondary results-additional-info">{{ result.results }}</div> 
-                <a href="{% url 'delete_result' result_id = result.id %}" class="col-4 bg-secondary results-additional-info text-center text-danger">DEL</a>                
+                <a href="{% url 'delete_result' result_id=result.id %}" class="col-4 bg-secondary results-additional-info text-center text-danger">DEL</a>                
             {% endif %}                  
         {% endfor %}
     </div>
