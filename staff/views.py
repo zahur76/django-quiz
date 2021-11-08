@@ -3,6 +3,7 @@ from django.shortcuts import (
 from django.contrib import messages
 from django.db.models import Q
 from .models import Staff
+from quiz.models import Results
 from .forms import add_staffForm
 
 
@@ -70,8 +71,8 @@ def delete_staff(request, staff_id):
     return redirect(reverse('staff'))
 
 def quiz_results(request):
-    all_results = Staff.objects.all()
+    all_results = Results.objects.all()
     context = {
         'results': all_results,
     }
-    return render(request, 'staff/quiz_results.html')
+    return render(request, 'staff/quiz_results.html', context)

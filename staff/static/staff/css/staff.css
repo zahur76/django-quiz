@@ -44,7 +44,7 @@ input::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 560px){    
-    .staff-text{        
+    .staff-text {        
         font-size: 12px;
     }
     .custom-select, .search-button {

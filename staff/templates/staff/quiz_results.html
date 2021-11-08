@@ -9,7 +9,16 @@
 {% block content %}
     <div class="text-center h1 mb-3">Quiz Results</div>
     <a href="{% url 'staff' %}" class="m-2 btn btn-dark rounded-0 text-light">Back</a>
-    {%%}
+    <div class="row m-0 staff-text">
+        {% for result in results %}
+            <div class="col-3">{{ result.staff.first_name }} {{ result.staff.last_name }}</div>
+            <div class="col-2">{{ result.results }}</div>
+            <div class="col-2">{{ result.attempts }}</div>
+            <div class="col-4">{{ result.created_at }}</div>
+            <div class="col-1">{{ result.pass_fail }}</div>
+        {% endfor %}
+    </div>
+    
 {% endblock %}
 
 {% block extra_js %}              
