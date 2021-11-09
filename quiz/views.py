@@ -4,6 +4,7 @@ import json
 import math
 import time
 from typing_extensions import final
+from django.db.models.query_utils import Q
 from django.shortcuts import (
     render, redirect, reverse, get_object_or_404, HttpResponse)
 from django.contrib import messages
@@ -61,7 +62,11 @@ def quiz(request):
     if not request.user.is_superuser:
         messages.error(request, 'Permision Denied!.')
         return redirect(reverse('home'))
-    quizzes = Quiz.objects.all()
+    quizzes = Quiz.objects.all()    
+    questions_present = []
+    for quiz in quizzes:
+        if Questions.objects.filter(quiz_id=quiz.id):
+            questions_present.append(quiz.quiz_name)
     encode_quiz= []
     tempo_dict = {}
     for quiz in quizzes:
@@ -70,8 +75,8 @@ def quiz(request):
         tempo_dict['quiz_name'] = quiz.quiz_name
         encode_quiz.append(tempo_dict)
         tempo_dict = {}
-    print(encode_quiz)
     context = {
+        'questions': questions_present,
         'quizzes': encode_quiz,
     }
 
@@ -161,10 +166,7 @@ def questionnaire(request, quiz_id, num=12345):
         print(request.session['answer'])
         request.session['quiz']= {'quiz_id': quiz_id}
     quiz = get_object_or_404(Quiz, id=quiz_id)
-    if num==0:
-        actual_question = get_object_or_404(Questions, id=question_id[num])
-    else:
-        actual_question = get_object_or_404(Questions, id=question_id[num])
+    actual_question = get_object_or_404(Questions, id=question_id[num])
     crypt= {
         "A": randon_word(6),
         "B": randon_word(6),

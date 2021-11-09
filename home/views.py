@@ -1,7 +1,7 @@
 from django.db.models.query_utils import Q
 from django.shortcuts import get_object_or_404, render
 from django.contrib import messages
-from quiz.models import Quiz
+from quiz.models import Quiz, Questions
 from staff.models import Staff
 from quiz.views import random_number_encode
 
@@ -17,6 +17,10 @@ def home(request):
             request, 'Incorrect Employee Number!')
             return render(request, 'home/index.html')
         quizzes = Quiz.objects.all()
+        questions_present = []
+        for quiz in quizzes:
+            if Questions.objects.filter(quiz_id=quiz.id):
+                questions_present.append(quiz.quiz_name)
         encode_quiz= []
         tempo_dict = {}
         if staff:
@@ -27,6 +31,7 @@ def home(request):
                 encode_quiz.append(tempo_dict)
                 tempo_dict = {}
             context = {
+                'questions': questions_present,
                 'quizzes': encode_quiz,
                 'staff': staff,
             }
