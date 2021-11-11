@@ -3,14 +3,19 @@ body, html {
     display: flex;
     flex-direction: column; 
     height: 100vh;         
-} 
+}
+
+.bg-grad {
+    background-image: linear-gradient(to right, red , rgb(252, 185, 185));
+  }
 
 nav a {
     text-decoration: none !important;
 }
 
 .content {   
-    flex: 1;              
+    flex: 1;
+    background-image: linear-gradient(to right, rgb(197, 189, 189) , rgb(248, 248, 248));           
 }
 
 .overlay{
