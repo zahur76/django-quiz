@@ -31,17 +31,18 @@ nav a {
 }
 
 .bg-secondary {
-    background: rgb(156, 153, 153) !important;
+    background: linear-gradient(to right, rgb(197, 189, 189) , rgb(248, 248, 248)); 
 }
 
 /* Modal */
-.modal { 
+.modal {    
     width: 40%;      
     left: 30%;
     top: 25%; 
 }
 
 .modal-content {
+    border: 1px solid rgb(109, 107, 107) !important;
     z-index: 1;
 }
 
