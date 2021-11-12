@@ -6,7 +6,7 @@ body, html {
 }
 
 .bg-grad {
-    background-image: linear-gradient(to right, red , rgb(252, 185, 185));
+    background-image: linear-gradient(to right, red , rgb(245, 133, 133));
   }
 
 nav a {
