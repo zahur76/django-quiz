@@ -1,9 +1,8 @@
 # TABLE OF CONTENT 
 * [Summary](#summary)
 * [Installation](#installation)
+* [Main Features](#main-features)
 * [Contact](#contact)
-
-
 
 # Summary
 
@@ -25,6 +24,23 @@ The live site can be found [here](https://django-quiz-zahur.herokuapp.com/)
 * run ```python manage.py migrate```
 * run ```python manage.py createsuperuser```
 * run ```python manage.py runserver```
+
+# Main Features
+
+* Employees sign in using Employee number
+![sign-in](static/doc/sign-in.jpg)
+![sign-in-two](static/doc/sign-in-two.jpg)
+
+* Admin Interface
+![admin](static/doc/admin.jpg)
+![staff](static/doc/staff.jpg)
+
+* Quiz Management
+![quiz](static/doc/quiz.jpg)
+![question](static/doc/question.jpg)
+
+* Result page
+![results](static/doc/results.jpg)
 
 # Contact
 

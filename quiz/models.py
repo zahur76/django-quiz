@@ -7,6 +7,7 @@ class Quiz(models.Model):
         verbose_name_plural = "Quiz"
 
     quiz_name = models.CharField(max_length=254)
+    pass_mark = models.IntegerField(default=75)
 
     def __str__(self):
         return self.quiz_name

@@ -15,6 +15,7 @@ class add_quizForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         placeholders = {
             'quiz_name': 'Quiz Name',
+            'pass_mark': 'Pass Mark',
         }
 
         self.fields['quiz_name'].widget.attrs['autofocus'] = True
@@ -24,6 +25,7 @@ class add_quizForm(forms.ModelForm):
             self.fields[field].widget.attrs[
             'class'] = 'border-dark m-1 rounded-0 mx-auto add_quiz-form-input'
             self.fields[field].label = False
+            self.fields[field].label = placeholders[field]
 
 class add_questionForm(forms.ModelForm):
     class Meta:
