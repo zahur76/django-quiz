@@ -53,4 +53,8 @@ class add_questionForm(forms.ModelForm):
                 'placeholder'] = placeholders[field]
             self.fields[field].widget.attrs[
             'class'] = 'border-dark m-1 rounded-0 mx-auto add_quiz-form-input'
-            self.fields[field].label = False
+            if field == 'answer':
+                self.fields[field].label = 'Answer'
+            else:
+                self.fields[field].label = False
+            

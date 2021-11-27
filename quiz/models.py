@@ -25,7 +25,13 @@ class Questions(models.Model):
     second_answer = models.CharField(max_length=254)
     third_answer = models.CharField(max_length=254)
     fourth_answer = models.CharField(max_length=254)
-    answer = models.CharField(max_length=254)
+    answer_choices = [
+                ('A', 'A'),
+                ('B', 'B'),
+                ('C', 'C'),
+                ('D', 'D'),
+                ]
+    answer = models.CharField(max_length=26, choices=answer_choices, null=False, default='A')
 
     def __str__(self):
         return self.quiz.quiz_name

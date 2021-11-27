@@ -15,6 +15,11 @@ input[type="radio"]{
     vertical-align: middle;
 }
 
+#id_answer {
+    padding-top: 1px ;
+    padding-bottom: 1px ;
+}
+
 /* Media screen */
 @media screen and (max-width: 992px){
     .add-quiz-form {
