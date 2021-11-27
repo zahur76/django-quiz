@@ -16,7 +16,7 @@ Basic protection used to prevent url manipulation by crypting url including codi
 
 Can change the pass mark from admin interface.
 
-The live site can be found [here](https://django-quiz-zahur.herokuapp.com/) and give it a try!
+The live site can be found [here](https://django-quiz-zahur.herokuapp.com/) and give it a try using employee number 1000!
 
 # Installation
 
@@ -30,18 +30,22 @@ The live site can be found [here](https://django-quiz-zahur.herokuapp.com/) and 
 # Main Features
 
 * Employees sign in using Employee number
+
 ![sign-in](static/doc/sign-in.jpg)
 ![sign-in-two](static/doc/sign-in-two.jpg)
 
 * Admin Interface
+
 ![admin](static/doc/admin.jpg)
 ![staff](static/doc/staff.jpg)
 
 * Quiz Management
+
 ![quiz](static/doc/quiz.jpg)
 ![question](static/doc/question.jpg)
 
 * Result page
+
 ![results](static/doc/results.jpg)
 
 # Contact
