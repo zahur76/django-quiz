@@ -294,7 +294,7 @@ def results(request):
         }
         return render(request, 'quiz/results.html', context)
 
-    if final_results >= 75:
+    if final_results >= actual_quiz.pass_mark:
         pass_fail = "Pass"
     else:
         pass_fail = "Fail"
@@ -311,5 +311,6 @@ def results(request):
         'date': date,
         'results': final_results,
         'staff': staff,
+        'pass': actual_quiz.pass_mark,
     }
     return render(request, 'quiz/results.html', context)

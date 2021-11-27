@@ -14,7 +14,9 @@ Results saved to database and can be viewed from admin panel.
 
 Basic protection used to prevent url manipulation by crypting url including coding preventing answering same question twice.
 
-The live site can be found [here](https://django-quiz-zahur.herokuapp.com/)
+Can change the pass mark from admin interface.
+
+The live site can be found [here](https://django-quiz-zahur.herokuapp.com/) and give it a try!
 
 # Installation
 
