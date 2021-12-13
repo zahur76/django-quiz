@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('quiz', '0003_results'),
+        ("quiz", "0003_results"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='results',
-            name='attempts',
+            model_name="results",
+            name="attempts",
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='results',
-            name='results',
-            field=models.CharField(default='0', max_length=254),
+            model_name="results",
+            name="results",
+            field=models.CharField(default="0", max_length=254),
         ),
     ]

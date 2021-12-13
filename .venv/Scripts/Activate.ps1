@@ -27,7 +27,7 @@ function global:deactivate ([switch]$NonDestructive) {
 
 deactivate -nondestructive
 
-$env:VIRTUAL_ENV="C:\Users\mmeerun\codeacademy\django-quiz\.venv"
+$env:VIRTUAL_ENV="C:\Users\mmeerun\codeacademy\Django\django-quiz\.venv"
 
 if (! $env:VIRTUAL_ENV_DISABLE_PROMPT) {
     # Set the prompt to include the env name

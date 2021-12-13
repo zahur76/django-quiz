@@ -1,36 +1,34 @@
 from django.contrib import admin
-from .models import Quiz, Questions, Results
+
+from .models import Questions, Quiz, Results
+
 # Register your models here.
 
 
 class QuizAdmin(admin.ModelAdmin):
     # Admin display
     list_display = (
-        'id',
-        'quiz_name',
+        "id",
+        "quiz_name",
     )
     # Ordering in admin
-    ordering = ('id',)
+    ordering = ("id",)
+
 
 class QuestionsAdmin(admin.ModelAdmin):
     # Admin display
-    list_display = (
-        'question',
-    )
+    list_display = ("question",)
     # Ordering in admin
-    ordering = ('id',)
+    ordering = ("id",)
+
 
 class ResultsAdmin(admin.ModelAdmin):
     # Admin display
-    list_display = (
-        'staff',
-        'quiz_name',
-        'created_at'
-    )
+    list_display = ("staff", "quiz_name", "created_at")
     # Ordering in admin
-    ordering = ('id',)
+    ordering = ("id",)
+
 
 admin.site.register(Quiz, QuizAdmin)
 admin.site.register(Questions, QuestionsAdmin)
 admin.site.register(Results, ResultsAdmin)
-
